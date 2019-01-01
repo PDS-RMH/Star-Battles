@@ -1,0 +1,46 @@
+==========Common Github Commands==========
+
+*** 0) git pull
+// Pulls the working branch repo
+
+1)  git clone URL  
+// Clones an existing repo.  Replace URL with the HTTPS from Github.com
+
+2) git status
+// Provides status of uncommitted and commited files
+
+3) git add Filename
+// Adds files to be committed.  Replace Filename with the file name to be added for the next commit.
+
+*** 4) git commit -m "comment"
+// Commits the file.  -m adds message.  "comment" for commit comment.
+
+5) git push
+// Pushes the commits to the working branch
+
+6) git
+// Shows all commands that can be used
+
+*** 7) git add -A
+// Adds all amended files to the bucket that will be committed
+
+
+If merge conflict, resolve conflict in code, then perform following steps to commit
+git add -a
+git commit
+escape key, type ":wq"
+
+
+==========BRANCHING==========
+0) git branch
+// Shows available branches
+
+1) git branch feature1
+// Adds a new branch called feature 1 from the branch that was active
+
+2) git checkout feature1
+// Switch to a different branch.  Replace feature1 with branch to be switched to.
+
+3)  git merge master
+// Merges the checked out branch back into master.  Master can also be another downstream branch from working branch.
+
