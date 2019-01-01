@@ -20,7 +20,14 @@ public class PlayerMovement : MonoBehaviour {
 
     void ShowUIText()
     {
-        xAcceleration.text = Input.acceleration.x.ToString();
+        // X acceleration is 0 when level, and +90 when rotated 90 degrees counter clockwise
+        xAcceleration.text = "X Acceleration: " + Input.acceleration.x.ToString();
+
+        // y = 90 minus x (verify)
+        yAcceleration.text = "Y Acceleration: " + Input.acceleration.y.ToString();
+
+        //Attitude control
+        zAcceleration.text = "Z Acceleration: " + Input.acceleration.z.ToString();
         position.text = "X Position" + this.transform.position.x.ToString();
         
     }
