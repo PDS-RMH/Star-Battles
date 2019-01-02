@@ -5,17 +5,59 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    [SerializeField] float xRotationSpeed = 1.0f;
+ //   [SerializeField] float xRotationSpeed = 1.0f;
     public Text xAcceleration;
     public Text yAcceleration;
     public Text zAcceleration;
     public Text position;
     public GameObject go;
+    public Rigidbody rb;
+    public float attitudeSensitivity = 1f;
+    public float thrust = 10f;
+    public Button resetRotations;
 
+    // Variables to read and store the instantaneous rotation when button is pressed
+    private float xAccelerationInstant;
+    private float yAccelerationInstant;
+    private float zAccelerationInstant;
 
-    private void Update()
+    private void Start()
+    {
+        rb.GetComponent<Rigidbody>();
+        resetRotations.onClick.AddListener(ResetRotationsFunction);
+    }
+
+    public void Update()
+    {
+        // Verify system that game is running on
+#if UNITY_ANDROID
+        AndroidPlayerControls();
+#endif
+        PCPlayerControls();
+
+        xAccelerationInstant = Input.acceleration.x;
+    }
+
+    private void FixedUpdate()
     {
         ShowUIText();
+    }
+
+
+    // Reset rotations after button is pressed
+    public void ResetRotationsFunction()
+    {
+        // X Input
+        if (Input.acceleration.x > 0)
+        {
+            xAccelerationInstant = 0f - Input.acceleration.x;
+        }
+
+        else
+        {
+            xAccelerationInstant = 0f + Input.acceleration.x;
+        }
+
     }
 
     void ShowUIText()
@@ -32,4 +74,19 @@ public class PlayerMovement : MonoBehaviour {
         
     }
 
+    public void AndroidPlayerControls()
+    {
+        go.transform.Rotate(Vector3.forward, Input.acceleration.z * attitudeSensitivity, Space.Self);
+        go.transform.Rotate(Vector3.up, xAccelerationInstant * attitudeSensitivity, Space.Self);
+
+        
+    }
+
+    public void PCPlayerControls()
+        {
+                if (Input.GetKey("w") == true)
+        {
+            rb.AddRelativeForce(0, -10f * thrust, 0, ForceMode.Force);
+        }
+        }
 }
