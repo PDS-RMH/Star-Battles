@@ -13,18 +13,24 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject go;
     public Rigidbody rb;
     public float attitudeSensitivity = 1f;
-    public float thrust = 10f;
+    public float thrust = 1f;
     public Button resetRotations;
+    public Slider thrustSlider;
 
     // Variables to read and store the instantaneous rotation when button is pressed
-    private float xAccelerationInstant;
-    private float yAccelerationInstant;
-    private float zAccelerationInstant;
+    private float xAccelerationDelta;
+    private float yAccelerationDelta;
+    private float zAccelerationDelta;
+
 
     private void Start()
     {
         rb.GetComponent<Rigidbody>();
         resetRotations.onClick.AddListener(ResetRotationsFunction);
+        xAccelerationDelta = -Input.acceleration.x;
+        yAccelerationDelta = -Input.acceleration.y;
+        zAccelerationDelta = -Input.acceleration.z;
+
     }
 
     public void Update()
@@ -34,8 +40,7 @@ public class PlayerMovement : MonoBehaviour {
         AndroidPlayerControls();
 #endif
         PCPlayerControls();
-
-        xAccelerationInstant = Input.acceleration.x;
+        Debug.Log(xAccelerationDelta);
     }
 
     private void FixedUpdate()
@@ -47,16 +52,9 @@ public class PlayerMovement : MonoBehaviour {
     // Reset rotations after button is pressed
     public void ResetRotationsFunction()
     {
-        // X Input
-        if (Input.acceleration.x > 0)
-        {
-            xAccelerationInstant = 0f - Input.acceleration.x;
-        }
-
-        else
-        {
-            xAccelerationInstant = 0f + Input.acceleration.x;
-        }
+        xAccelerationDelta = -Input.acceleration.x;
+        yAccelerationDelta = -Input.acceleration.y;
+        zAccelerationDelta = -Input.acceleration.z;
 
     }
 
@@ -70,16 +68,16 @@ public class PlayerMovement : MonoBehaviour {
 
         //Attitude control
         zAcceleration.text = "Z Acceleration: " + Input.acceleration.z.ToString();
-        position.text = "X Position" + this.transform.position.x.ToString();
+        position.text = "X Position: " + this.transform.position.x.ToString();
         
     }
 
     public void AndroidPlayerControls()
     {
-        go.transform.Rotate(Vector3.forward, Input.acceleration.z * attitudeSensitivity, Space.Self);
-        go.transform.Rotate(Vector3.up, xAccelerationInstant * attitudeSensitivity, Space.Self);
+        go.transform.Rotate(Vector3.forward, (Input.acceleration.z + zAccelerationDelta) * attitudeSensitivity, Space.Self);
+        go.transform.Rotate(Vector3.up, (Input.acceleration.x + xAccelerationDelta) * attitudeSensitivity, Space.Self);
 
-        
+        rb.AddRelativeForce(0, thrustSlider.value * -thrust, 0, ForceMode.Force);
     }
 
     public void PCPlayerControls()
