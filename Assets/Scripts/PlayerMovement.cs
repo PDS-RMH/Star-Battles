@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -16,6 +18,8 @@ public class PlayerMovement : MonoBehaviour {
     public float thrust = 1f;
     public Button resetRotations;
     public Slider thrustSlider;
+    public Button leftButton;
+    public Button rightButton;
 
     // Variables to read and store the instantaneous rotation when button is pressed
     private float xAccelerationDelta;
@@ -27,6 +31,8 @@ public class PlayerMovement : MonoBehaviour {
     {
         rb.GetComponent<Rigidbody>();
         resetRotations.onClick.AddListener(ResetRotationsFunction);
+//        leftButton.onClick.AddListener(rotateLeftFunction);
+//        rightButton.onClick.AddListener(rotateRightFunction);
         xAccelerationDelta = -Input.acceleration.x;
         yAccelerationDelta = -Input.acceleration.y;
         zAccelerationDelta = -Input.acceleration.z;
@@ -58,6 +64,18 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+    /*
+    public void rotateLeftFunction()
+    {
+        go.transform.Rotate(Vector3.left, attitudeSensitivity, Space.Self);
+    }
+
+    public void rotateRightFunction()
+    {
+        go.transform.Rotate(-Vector3.left, attitudeSensitivity, Space.Self);
+    }
+    */
+
     void ShowUIText()
     {
         // X acceleration is 0 when level, and +90 when rotated 90 degrees counter clockwise
@@ -78,6 +96,13 @@ public class PlayerMovement : MonoBehaviour {
         go.transform.Rotate(Vector3.up, (Input.acceleration.x + xAccelerationDelta) * attitudeSensitivity, Space.Self);
 
         rb.AddRelativeForce(0, thrustSlider.value * -thrust, 0, ForceMode.Force);
+        
+        /*
+        if (Input.GetButton(leftButton)) 
+        {
+            rb.AddRelativeForce(0, 0, thrust, ForceMode.Force);
+        }
+        */
     }
 
     public void PCPlayerControls()
