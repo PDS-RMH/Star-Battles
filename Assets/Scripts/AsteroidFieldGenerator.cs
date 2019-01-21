@@ -24,15 +24,17 @@ public class AsteroidFieldGenerator : MonoBehaviour
 
     private Vector3[] asteroidArray;
     private GameObject go;
-    private int asteroidSpreadXY = 5;
-    private float asteroidSpreadZ = 200f;
+    public int asteroidSpreadXY = 20;
+    public float asteroidSpreadZ = 400f;
+    public float asteroidSize = 10f;
 
 
     void Awake()
     {
         asteroidArray = new Vector3[255];
         go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        go.AddComponent<MeshRenderer>();
+        go.GetComponent<MeshRenderer>();
+        go.transform.localScale = new Vector3(asteroidSize, asteroidSize, asteroidSize);
     }
     
     
@@ -85,9 +87,9 @@ public class AsteroidFieldGenerator : MonoBehaviour
             while (x < pixWidth)
             {
                 int i = 0;
-                if (noiseTex.GetPixel(x, y).grayscale > 0.5f)
+                if (noiseTex.GetPixel(x, y).grayscale > 0.4f)
                 {
-                    asteroidArray[i] = new Vector3(x * asteroidSpreadXY, y * asteroidSpreadXY, (noiseTex.GetPixel(x, y).grayscale * asteroidSpreadZ) - 50f);
+                    asteroidArray[i] = new Vector3(x * asteroidSpreadXY, y * asteroidSpreadXY, (noiseTex.GetPixel(x, y).grayscale * asteroidSpreadZ) - (asteroidSpreadZ/2));
                     Instantiate(go, asteroidArray[i], new Quaternion(0f, 0f, 0f, 1f));
                     x++;
                     i++;
