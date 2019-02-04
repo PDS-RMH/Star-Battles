@@ -72,6 +72,20 @@ public class PlayerMovement : MonoBehaviour {
         {
             thrust = 1f;
         }
+
+        /*
+         * BUILD SECTION FOR PLAYER VELOCITY LIMITS IN Y-COORDINATES ...
+         * METHOD 1:  FORCE IN Y-DIRECTION EQUAL TO MAGNITUDE BETWEEN Y=0 AND PLAYER COORDINATE
+         * METHOD 2:  PLAYER VELOCITY.Y * 0.05 ABOVE CEILING AND BELOW FLOOR.  PLAYER MAY GET "STUCK".
+        */
+        
+        // Ceiling Rebound Force
+        if(go.transform.position.y > 200f || go.transform.position.y < 200f)
+        {
+            float reboundForce = (float)go.transform.position.y;
+            rb.AddForce(0f, 0f, -reboundForce * 0.2f, ForceMode.Force);
+        }
+
     }
 
 
@@ -100,6 +114,10 @@ public class PlayerMovement : MonoBehaviour {
         position.text = "X Position: " + this.transform.position.x.ToString();
 
         //Speed Text
+        if(playerVelocity >= speedLimit)
+        {
+            velocityText.text = speedLimit.ToString();
+        }
         velocityText.text = "Speed: " + playerVelocity.ToString();
 
     }
@@ -119,9 +137,14 @@ public class PlayerMovement : MonoBehaviour {
 
     public void PCPlayerControls()
         {
-                if (Input.GetKey("w") == true)
+                if (Input.GetKey(KeyCode.W) == true)
         {
             rb.AddRelativeForce(0, -10f * thrust, 0, ForceMode.Force);
+        }
+
+                if(Input.GetKey(KeyCode.R) == true)
+        {
+            go.transform.Rotate(Vector3.forward, 2f, Space.Self);
         }
         }
 }
