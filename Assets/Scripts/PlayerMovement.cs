@@ -13,14 +13,21 @@ public class PlayerMovement : MonoBehaviour {
     public Text zAcceleration;
     public Text position;
     public Text velocityText;
+
     public GameObject go;
     public Rigidbody rb;
+
     public float attitudeSensitivity = 1f;
     public float thrust = 1f;
+
     public Button resetRotations;
     public Slider thrustSlider;
+
     [SerializeField] float speedLimit = 100f;
+
     public float playerVelocity;
+
+    Gyroscope player_gyro;
 
     // Variables to read and store the instantaneous rotation when button is pressed
     private float xAccelerationDelta;
@@ -31,10 +38,13 @@ public class PlayerMovement : MonoBehaviour {
     private void Start()
     {
         rb.GetComponent<Rigidbody>();
+        rb.GetComponent<Rigidbody>();
         resetRotations.onClick.AddListener(ResetRotationsFunction);
         xAccelerationDelta = -Input.acceleration.x;
  //       yAccelerationDelta = -Input.acceleration.y;
         zAccelerationDelta = -Input.acceleration.z;
+        player_gyro = Input.gyro;
+        player_gyro.enabled = true;
     }
 
 
@@ -45,19 +55,17 @@ public class PlayerMovement : MonoBehaviour {
         AndroidPlayerControls();
 #endif
         PCPlayerControls();
-
-        SpeedLimit();
-
     }
 
 
     public void Update()
     {
         ShowUIText();
+        SpeedLimit();
     }
 
 
-    // Calculates and displays the velocity of the player, and limits the maximum velocity
+    // Displays the velocity of the player, and limits the maximum velocity
     public void SpeedLimit()
     {
         playerVelocity = Mathf.Round(rb.velocity.magnitude * 10f) / 10f;
@@ -66,7 +74,6 @@ public class PlayerMovement : MonoBehaviour {
         if(playerVelocity > speedLimit)
         {
             rb.velocity = rb.velocity.normalized * speedLimit;
-            thrust = 0f;
         }
         else if(playerVelocity < speedLimit)
         {
@@ -93,7 +100,6 @@ public class PlayerMovement : MonoBehaviour {
     public void ResetRotationsFunction()
     {
         xAccelerationDelta = -Input.acceleration.x;
-//        yAccelerationDelta = -Input.acceleration.y;
         zAccelerationDelta = -Input.acceleration.z;
 
     }
@@ -102,13 +108,13 @@ public class PlayerMovement : MonoBehaviour {
     void ShowUIText()
     {
         // X acceleration is 0 when level, and +90 when rotated 90 degrees counter clockwise
-        xAcceleration.text = "X Acceleration: " + Input.acceleration.x.ToString();
+        xAcceleration.text = "Attitude: " + player_gyro.attitude.ToString();
 
         // y = 90 minus x (verify)
-        yAcceleration.text = "Y Acceleration: " + Input.acceleration.y.ToString();
+        yAcceleration.text = "Rotation Rate: " + player_gyro.rotationRate.ToString();
 
         //Attitude control
-        zAcceleration.text = "Z Acceleration: " + Input.acceleration.z.ToString();
+        zAcceleration.text = "Rotatoin Rate UB: " + player_gyro.rotationRateUnbiased.ToString();
 
         //Positional Text
         position.text = "X Position: " + this.transform.position.x.ToString();
@@ -125,26 +131,33 @@ public class PlayerMovement : MonoBehaviour {
 
     public void AndroidPlayerControls()
     {
-        //Rotate player ship based on accelerometer inputs
-        go.transform.Rotate(Vector3.forward, (Input.acceleration.z + zAccelerationDelta) * attitudeSensitivity, Space.Self);
-        go.transform.Rotate(Vector3.up, (Input.acceleration.x + xAccelerationDelta) * attitudeSensitivity, Space.Self);
+        if (player_gyro.enabled == true)
+        {
+            
+        }
+        else
+        {
+            //Rotate player ship based on accelerometer inputs
+            go.transform.Rotate(Vector3.forward, (Input.acceleration.z + zAccelerationDelta) * attitudeSensitivity, Space.Self);
+            go.transform.Rotate(Vector3.up, (Input.acceleration.x + xAccelerationDelta) * attitudeSensitivity, Space.Self);
 
-        //Reverse Thrust for Slider
-        rb.AddRelativeForce(0, thrustSlider.value * -thrust, 0, ForceMode.Force);
-
+            //Reverse Thrust for Slider
+            rb.AddRelativeForce(0, thrustSlider.value * -thrust, 0, ForceMode.Force);
+        }
     }
 
 
     public void PCPlayerControls()
         {
+        /*
                 if (Input.GetKey(KeyCode.W) == true)
-        {
-            rb.AddRelativeForce(0, -10f * thrust, 0, ForceMode.Force);
-        }
-
+                {
+                    rb.AddRelativeForce(0, -10f * thrust, 0, ForceMode.Force);
+                }
                 if(Input.GetKey(KeyCode.R) == true)
-        {
-            go.transform.Rotate(Vector3.forward, 2f, Space.Self);
-        }
+                {
+                    go.transform.Rotate(Vector3.forward, 2f, Space.Self);
+                }
+        */
         }
 }
