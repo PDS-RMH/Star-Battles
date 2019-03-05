@@ -26,12 +26,14 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float speedLimit = 100f;
 
     public float playerVelocity;
-
+    //Define Gyroscope Variables
     Gyroscope player_gyro;
+    private float xGyroDelta;
+    private float yGyroDelta;
+    private float zGyroDelta;
 
     // Variables to read and store the instantaneous rotation when button is pressed
     private float xAccelerationDelta;
- //   private float yAccelerationDelta;
     private float zAccelerationDelta;
 
 
@@ -41,10 +43,13 @@ public class PlayerMovement : MonoBehaviour {
         rb.GetComponent<Rigidbody>();
         resetRotations.onClick.AddListener(ResetRotationsFunction);
         xAccelerationDelta = -Input.acceleration.x;
- //       yAccelerationDelta = -Input.acceleration.y;
         zAccelerationDelta = -Input.acceleration.z;
         player_gyro = Input.gyro;
         player_gyro.enabled = true;
+
+        xGyroDelta = -player_gyro.attitude.x;
+        yGyroDelta = -player_gyro.attitude.y;
+        zGyroDelta = -player_gyro.attitude.z;
     }
 
 
@@ -62,6 +67,9 @@ public class PlayerMovement : MonoBehaviour {
     {
         ShowUIText();
         SpeedLimit();
+        Debug.Log("playerVelocity: " + playerVelocity);
+        Debug.Log("velocity.normalized: " + rb.velocity.normalized);
+        Debug.Log("velocity.magnitude: " + rb.velocity.magnitude);
     }
 
 
@@ -71,11 +79,11 @@ public class PlayerMovement : MonoBehaviour {
         playerVelocity = Mathf.Round(rb.velocity.magnitude * 10f) / 10f;
 //        Debug.Log(playerVelocity);
 
-        if(playerVelocity > speedLimit)
+        if(playerVelocity >= speedLimit)
         {
             rb.velocity = rb.velocity.normalized * speedLimit;
         }
-        else if(playerVelocity < speedLimit)
+        else 
         {
             thrust = 1f;
         }
@@ -87,11 +95,13 @@ public class PlayerMovement : MonoBehaviour {
         */
         
         // Ceiling Rebound Force
+        
         if(go.transform.position.y > 200f || go.transform.position.y < 200f)
         {
             float reboundForce = (float)go.transform.position.y;
             rb.AddForce(0f, 0f, -reboundForce * 0.2f, ForceMode.Force);
         }
+        
 
     }
 
@@ -99,9 +109,17 @@ public class PlayerMovement : MonoBehaviour {
     // Reset rotations after button is pressed
     public void ResetRotationsFunction()
     {
-        xAccelerationDelta = -Input.acceleration.x;
-        zAccelerationDelta = -Input.acceleration.z;
-
+        if (player_gyro.enabled == true)
+        {
+            xGyroDelta = -player_gyro.attitude.x;
+            yGyroDelta = -player_gyro.attitude.y;
+            zGyroDelta = -player_gyro.attitude.z;
+        }
+        else
+        {
+            xAccelerationDelta = -Input.acceleration.x;
+            zAccelerationDelta = -Input.acceleration.z;
+        }
     }
 
 
@@ -120,7 +138,7 @@ public class PlayerMovement : MonoBehaviour {
         position.text = "X Position: " + this.transform.position.x.ToString();
 
         //Speed Text
-        if(playerVelocity >= speedLimit)
+        if(playerVelocity >= speedLimit * 0.9f)
         {
             velocityText.text = speedLimit.ToString();
         }
@@ -133,7 +151,12 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (player_gyro.enabled == true)
         {
-            
+            go.transform.Rotate(Vector3.forward, (player_gyro.attitude.x + xGyroDelta) * attitudeSensitivity, Space.Self);
+            go.transform.Rotate(Vector3.right, (player_gyro.attitude.y + yGyroDelta) * attitudeSensitivity, Space.Self);
+            go.transform.Rotate(Vector3.up, (player_gyro.attitude.z + zGyroDelta) * attitudeSensitivity, Space.Self);
+
+            //Reverse Thrust for Slider
+            rb.AddRelativeForce(0, thrustSlider.value * -thrust, 0, ForceMode.Force);
         }
         else
         {
