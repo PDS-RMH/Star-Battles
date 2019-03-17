@@ -6,28 +6,24 @@ using UnityEngine.UI;
 public class FireMainGuns : MonoBehaviour {
 
     public Button fireButton;
-
-    public GameObject go;
-    public Rigidbody rb;
-    public Transform tr;
+    public Rigidbody rbProjectile;
+    public Rigidbody rbLauncher;
     public float laserSpeed = 100f;
 
 
     // Use this for initialization
     void Start () {
         fireButton.onClick.AddListener(FireFunction);
-        rb = go.GetComponent<Rigidbody>();
-        tr = go.GetComponent<Transform>();
     }
 	
     public void FireFunction()
     {
+        //Create clone of object using the position and rotation of the game object the script is attached to
         Rigidbody clone;
-        clone = Instantiate(rb, transform.position, transform.rotation);
+        clone = Instantiate(rbProjectile, transform.position, Quaternion.identity);
 
-        // Give the cloned object an initial velocity along the current
-        // object's Z axis
-        clone.velocity = transform.TransformDirection(Vector3.right * laserSpeed);
+        // Give the cloned object an initial velocity along the current + laser speed velocity
+        clone.velocity = transform.TransformDirection(rbLauncher.velocity + Vector3.right * laserSpeed);
     }
 
 }

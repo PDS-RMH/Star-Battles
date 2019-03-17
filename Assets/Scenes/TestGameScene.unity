@@ -53,7 +53,7 @@ LightmapSettings:
     m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 0
-    m_EnableRealtimeLightmaps: 0
+    m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 10
     m_Resolution: 2
@@ -304,7 +304,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -385,6 +385,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: b99e5f4016e7cd740946b6061adad380, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: b99e5f4016e7cd740946b6061adad380, type: 3}
+      propertyPath: m_ReceiveShadows
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5384,10 +5388,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireButton: {fileID: 2044745244}
-  go: {fileID: 1124722276510576, guid: 7f183d3016629464a9b16001905e92f2, type: 2}
-  rb: {fileID: 54273155641821952, guid: 7f183d3016629464a9b16001905e92f2, type: 2}
-  tr: {fileID: 4252952947304870, guid: 7f183d3016629464a9b16001905e92f2, type: 2}
-  laserSpeed: 100
+  rbProjectile: {fileID: 54273155641821952, guid: 7f183d3016629464a9b16001905e92f2,
+    type: 2}
+  rbLauncher: {fileID: 1499032829}
+  laserSpeed: 500
 --- !u!1 &701606585
 GameObject:
   m_ObjectHideFlags: 0
@@ -5616,10 +5620,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireButton: {fileID: 2044745244}
-  go: {fileID: 1124722276510576, guid: 7f183d3016629464a9b16001905e92f2, type: 2}
-  rb: {fileID: 54273155641821952, guid: 7f183d3016629464a9b16001905e92f2, type: 2}
-  tr: {fileID: 4252952947304870, guid: 7f183d3016629464a9b16001905e92f2, type: 2}
-  laserSpeed: 100
+  rbProjectile: {fileID: 54273155641821952, guid: 7f183d3016629464a9b16001905e92f2,
+    type: 2}
+  rbLauncher: {fileID: 1499032829}
+  laserSpeed: 500
 --- !u!1 &915200513
 GameObject:
   m_ObjectHideFlags: 0
@@ -6530,7 +6534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1484608345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6705,7 +6709,7 @@ Rigidbody:
   m_GameObject: {fileID: 1499032824}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.5
+  m_Drag: 0.3
   m_AngularDrag: 1
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -6986,7 +6990,7 @@ MonoBehaviour:
   m_MinValue: -30
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 29.7
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7271,7 +7275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1789760361
 Transform:
   m_ObjectHideFlags: 0
@@ -12581,7 +12585,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295

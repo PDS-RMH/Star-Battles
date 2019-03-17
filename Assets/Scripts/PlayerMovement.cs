@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public float attitudeSensitivity = 1f;
     public float thrust = 1f;
+    private float resetThrust;
 
     public Button resetRotations;
     public Slider thrustSlider;
@@ -50,6 +51,8 @@ public class PlayerMovement : MonoBehaviour {
         xGyroDelta = -player_gyro.attitude.x;
         yGyroDelta = -player_gyro.attitude.y;
         zGyroDelta = -player_gyro.attitude.z;
+
+        resetThrust = thrust;
     }
 
 
@@ -67,9 +70,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         ShowUIText();
         SpeedLimit();
-        Debug.Log("playerVelocity: " + playerVelocity);
-        Debug.Log("velocity.normalized: " + rb.velocity.normalized);
-        Debug.Log("velocity.magnitude: " + rb.velocity.magnitude);
+
     }
 
 
@@ -77,7 +78,6 @@ public class PlayerMovement : MonoBehaviour {
     public void SpeedLimit()
     {
         playerVelocity = Mathf.Round(rb.velocity.magnitude * 10f) / 10f;
-//        Debug.Log(playerVelocity);
 
         if(playerVelocity >= speedLimit)
         {
@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         else 
         {
-            thrust = 1f;
+            thrust = resetThrust;
         }
 
         /*
@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour {
         
         // Ceiling Rebound Force
         
-        if(go.transform.position.y > 200f || go.transform.position.y < 200f)
+        if(go.transform.position.y > 200f || go.transform.position.y < -200f)
         {
             float reboundForce = (float)go.transform.position.y;
             rb.AddForce(0f, 0f, -reboundForce * 0.2f, ForceMode.Force);
@@ -138,12 +138,14 @@ public class PlayerMovement : MonoBehaviour {
         position.text = "X Position: " + this.transform.position.x.ToString();
 
         //Speed Text
-        if(playerVelocity >= speedLimit * 0.9f)
+        if (playerVelocity >= (speedLimit * 0.99f))
         {
             velocityText.text = speedLimit.ToString();
         }
-        velocityText.text = "Speed: " + playerVelocity.ToString();
-
+        else
+        {
+            velocityText.text = "Speed: " + playerVelocity.ToString();
+        }
     }
 
 
