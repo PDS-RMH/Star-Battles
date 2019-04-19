@@ -28,6 +28,8 @@ public class AsteroidFieldGenerator : MonoBehaviour
     public float asteroidSpreadZ = 400f;
     public float asteroidSize = 10f;
 
+    public GameObject asteroid1;
+
 
     void Awake()
     {
@@ -90,7 +92,7 @@ public class AsteroidFieldGenerator : MonoBehaviour
                 if (noiseTex.GetPixel(x, y).grayscale > 0.4f)
                 {
                     asteroidArray[i] = new Vector3(x * asteroidSpreadXY, y * asteroidSpreadXY, (noiseTex.GetPixel(x, y).grayscale * asteroidSpreadZ) - (asteroidSpreadZ/2));
-                    Instantiate(go, asteroidArray[i], new Quaternion(0f, 0f, 0f, 1f));
+                    Instantiate(asteroid1, asteroidArray[i], new Quaternion(0f, 0f, 0f, 1f));
                     x++;
                     i++;
                 }

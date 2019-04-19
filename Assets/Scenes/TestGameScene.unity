@@ -6332,7 +6332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 262.40002, y: 109.349976}
+  m_AnchoredPosition: {x: 262.40002, y: 149.6}
   m_SizeDelta: {x: 220.2, y: 49.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1359072306
@@ -6709,8 +6709,8 @@ Rigidbody:
   m_GameObject: {fileID: 1499032824}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.3
-  m_AngularDrag: 1
+  m_Drag: 0.05
+  m_AngularDrag: 0.5
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -7336,7 +7336,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 262.4, y: -0.0000038146973}
+  m_AnchoredPosition: {x: 262.4, y: 37.70001}
   m_SizeDelta: {x: 220.2, y: 45.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1813536811
@@ -7730,7 +7730,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 262.40002, y: 61.4}
+  m_AnchoredPosition: {x: 262.40002, y: 91}
   m_SizeDelta: {x: 220.2, y: 46.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2001295148
