@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//  Give a prefab random rotation in all three rotational DOF's
+//  Rob Hill - Pixel Dot Studios, LLC 
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

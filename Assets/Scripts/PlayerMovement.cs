@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿// Player rotations based on the rotation of the mobile device
+// Thrust is based on UI slider
+// Rob Hill - Pixel Dot Studios, LLC
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;

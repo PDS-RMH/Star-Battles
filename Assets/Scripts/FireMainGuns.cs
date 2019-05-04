@@ -11,7 +11,6 @@ public class FireMainGuns : MonoBehaviour {
     public float laserSpeed = 100f;
 
 
-    // Use this for initialization
     void Start () {
         fireButton.onClick.AddListener(FireFunction);
     }
@@ -25,5 +24,4 @@ public class FireMainGuns : MonoBehaviour {
         // Give the cloned object an initial velocity along the current + laser speed velocity
         clone.velocity = transform.TransformDirection(rbLauncher.velocity + Vector3.right * laserSpeed);
     }
-
 }
