@@ -5572,8 +5572,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 811678596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1000, y: 0, z: 0}
-  m_LocalScale: {x: 350, y: 350, z: 350}
+  m_LocalPosition: {x: 5549, y: 0, z: 0}
+  m_LocalScale: {x: 1000, y: 1000, z: 1000}
   m_Children:
   - {fileID: 1956459112}
   m_Father: {fileID: 0}
@@ -5659,9 +5659,10 @@ MonoBehaviour:
   yOrg: 0
   scale: 15
   pixelValue: 0
-  asteroidSpreadXY: 15
-  asteroidSpreadZ: 3000
+  asteroidSpreadXY: 45
+  asteroidSpreadZ: 6000
   asteroidSize: 5
+  asteroid1: {fileID: 1585062694248462, guid: 6f536f69572baed45a22ea61a60d3052, type: 2}
 --- !u!23 &915200515
 MeshRenderer:
   m_ObjectHideFlags: 0

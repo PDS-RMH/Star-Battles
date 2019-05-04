@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: 4381034442921472}
   - component: {fileID: 33834832313417716}
   - component: {fileID: 23028131462085778}
+  - component: {fileID: 65827860667576370}
   m_Layer: 0
-  m_Name: Asteroid1 (3)
+  m_Name: Asteroid1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1891511630088892}
   m_Mesh: {fileID: 4300000, guid: ebfc29b077d7fb44c9e54d676d8f9366, type: 3}
+--- !u!65 &65827860667576370
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1891511630088892}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.80867, y: 1.2678947, z: 1.6179923}
+  m_Center: {x: 0.0051956177, y: -0.13113916, z: 0.06523086}
